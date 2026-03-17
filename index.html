@@ -1,306 +1,162 @@
-﻿<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kartu Ulang Tahun</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg-top: #fff1c8;
-      --bg-bottom: #ffd6d6;
-      --card: rgba(255, 255, 255, 0.82);
-      --text: #2d1f2b;
-      --accent: #ff5f8f;
-      --accent-2: #ff9a3d;
-      --ok: #2f9e44;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun!</title>
 
-    * { box-sizing: border-box; }
+    <style>
+        :root {
+            --pink-cerah: #ff69b4;
+            --kuning-cerah: #ffd700;
+            --biru-muda: #87ceeb;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Nunito", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 15% 20%, #ffffffaa 0 15%, transparent 35%),
-        radial-gradient(circle at 85% 15%, #ffffff99 0 12%, transparent 32%),
-        linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
-      overflow-x: hidden;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-    }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, var(--biru-muda), #f0f8ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+        }
 
-    .wrap {
-      width: min(760px, 100%);
-      position: relative;
-      z-index: 2;
-    }
+        .container {
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
 
-    .card {
-      background: var(--card);
-      border: 1px solid #ffffff;
-      backdrop-filter: blur(8px);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 15px 45px #db8f8f4a;
-    }
+        h1 {
+            color: var(--pink-cerah);
+        }
 
-    .badge {
-      display: inline-block;
-      background: #fff;
-      color: #8d3e59;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      box-shadow: 0 6px 18px #eaa5c03b;
-    }
+        .foto-frame {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border: 5px solid var(--kuning-cerah);
+            border-radius: 50%;
+            overflow: hidden;
+        }
 
-    h1 {
-      margin: 12px 0 10px;
-      line-height: 1.15;
-      font-size: clamp(30px, 7.4vw, 56px);
-      color: #7e2747;
-    }
+        .foto-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .subtitle {
-      margin: 0;
-      font-size: clamp(14px, 3.7vw, 18px);
-      color: #5f4a57;
-    }
+        .btn {
+            background: var(--pink-cerah);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
 
-    .gift-area {
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 8px;
-    }
+        #pesan {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 1s;
+        }
 
-    .gift-btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--accent), #ff7cb7);
-      color: #fff;
-      font-size: clamp(42px, 12vw, 70px);
-      line-height: 1;
-      padding: 14px 28px;
-      box-shadow: 0 10px 30px #ff7ba15e;
-      animation: bounce 1.2s infinite;
-      transition: transform 0.2s;
-    }
+        .bunga {
+            position: fixed;
+            top: -10%;
+            animation: fall linear infinite;
+        }
 
-    .gift-btn:active { transform: scale(0.97); }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
 
-    .gift-note {
-      margin: 0;
-      font-size: 14px;
-      color: #7a5568;
-      font-weight: 700;
-    }
-
-    .message {
-      margin-top: 16px;
-      background: #ffffffbf;
-      border: 1px solid #fff;
-      border-radius: 16px;
-      padding: 16px;
-      min-height: 190px;
-      line-height: 1.6;
-      font-size: clamp(14px, 3.9vw, 18px);
-      white-space: pre-wrap;
-    }
-
-    .controls {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      color: #fff;
-      box-shadow: 0 8px 18px #0000001f;
-    }
-
-    .btn-music { background: linear-gradient(135deg, #ff7f50, var(--accent-2)); }
-    .btn-replay { background: linear-gradient(135deg, #34b36a, var(--ok)); }
-
-    .hint {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #795f6b;
-    }
-
-    .float {
-      position: fixed;
-      bottom: -40px;
-      font-size: 24px;
-      pointer-events: none;
-      animation: floatUp linear forwards;
-      z-index: 1;
-      opacity: 0.9;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
-    @keyframes floatUp {
-      to {
-        transform: translateY(-110vh) rotate(16deg);
-        opacity: 0;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .card { padding: 16px; border-radius: 18px; }
-      .message { min-height: 170px; }
-      .controls { gap: 8px; }
-      .btn { width: 100%; }
-    }
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; }
+        }
+    </style>
 </head>
+
 <body>
-  <main class="wrap">
-    <section class="card">
-      <span class="badge">Ucapan Spesial</span>
-      <h1>Happy Birthday, Wenty Gea!</h1>
-      <p class="subtitle">Klik kadonya dulu, lalu baca pesannya sampai selesai.</p>
 
-      <div class="gift-area" id="giftArea">
-        <button class="gift-btn" id="openBtn" type="button" aria-label="Buka kado">🎁</button>
-        <p class="gift-note">Tap kado untuk membuka kejutan</p>
-      </div>
+<div class="container">
+    <h1>Selamat Ulang Tahun! 🎂</h1>
 
-      <article class="message" id="messageBox" aria-live="polite"></article>
+    <div class="foto-frame">
+        <img src="image.png">
+    </div>
 
-      <div class="controls">
-        <button class="btn btn-music" id="musicBtn" type="button">Putar Musik</button>
-        <button class="btn btn-replay" id="replayBtn" type="button">Ulangi Pesan</button>
-        <button class="btn btn-music" id="thanksBtn" type="button">Ucapan Terima Kasih</button>
-      </div>
+    <button class="btn" onclick="tampilkanKejutan()">Buka Kejutan ✨</button>
+    <button class="btn" onclick="toggleMusic(this)">🎵 Play Music</button>
 
-      <p class="hint">Jika musik tidak langsung bunyi, klik tombol musik lagi (aturan browser HP).</p>
-    </section>
-  </main>
+    <div id="pesan">
+        <h3>Semangat untukmu, calon dokter hebat! 🩺✨</h3>
+        <p>Teruslah belajar dengan tekun dan penuh semangat.</p>
+        <p>Semoga sukses selalu dalam dunia kedokteran.</p>
+        <p><strong>- Andre -</strong></p>
+    </div>
 
-  <audio id="bgMusic" loop preload="auto">
-    <source src="hbd.mp3" type="audio/mpeg" />
-  </audio>
+    <audio id="bg-music" loop>
+        <source src="hbd.mp3" type="audio/mpeg">
+    </audio>
+    <br><br>
+<a href="https://wa.me/6285173434052?text=%20aku%20sudah%20lihat%20kejutan%20ulang%20tahunnya%20🎂✨" target="_blank">
+    <button class="btn-kejutan">💬 Kirim Pesan </button>
+</a>
+</div>
 
-  <script>
-    const message = `Untuk Wenty Gea,
+<script>
+const music = document.getElementById("bg-music");
 
-Selamat ulang tahun.
-Semoga semua cita-citamu terwujud satu per satu.
+function tampilkanKejutan() {
+    const pesan = document.getElementById('pesan');
+    pesan.style.display = 'block';
 
-Semoga kamu selalu sehat, bahagia,
-dan dikelilingi orang-orang baik.
+    document.querySelector('.btn').innerText = 'Yay! ❤️';
 
-Ucapan ini dari seseorang
-yang selalu mendoakan yang terbaik untukmu.
+    // auto play musik saat klik (allowed by browser)
+    music.play();
 
-Happy Birthday, Wenty Gea!`;
+    for (let i = 0; i < 15; i++) createBunga();
+}
 
-    const openBtn = document.getElementById("openBtn");
-    const replayBtn = document.getElementById("replayBtn");
-    const musicBtn = document.getElementById("musicBtn");
-    const thanksBtn = document.getElementById("thanksBtn");
-    const messageBox = document.getElementById("messageBox");
-    const bgMusic = document.getElementById("bgMusic");
-
-    let idx = 0;
-    let typingTimer = null;
-    let launched = false;
-    let floatingTimer = null;
-
-    function typeMessage() {
-      clearTimeout(typingTimer);
-      if (idx < message.length) {
-        messageBox.textContent += message.charAt(idx);
-        idx += 1;
-        typingTimer = setTimeout(typeMessage, 36);
-      }
+function toggleMusic(btn) {
+    if (music.paused) {
+        music.play();
+        btn.innerText = "⏸ Pause Music";
+    } else {
+        music.pause();
+        btn.innerText = "🎵 Play Music";
     }
+}
 
-    function startCard() {
-      launched = true;
-      openBtn.disabled = true;
-      openBtn.style.opacity = "0.75";
-      messageBox.textContent = "";
-      idx = 0;
-      typeMessage();
-      spawnFloaters();
-      playMusic();
-    }
+function createBunga() {
+    const bunga = document.createElement('div');
+    bunga.classList.add('bunga');
 
-    function replayMessage() {
-      clearTimeout(typingTimer);
-      messageBox.textContent = "";
-      idx = 0;
-      typeMessage();
-    }
+    const emojis = ['🌸','✨','🎈','💖'];
+    bunga.innerText = emojis[Math.floor(Math.random() * emojis.length)];
 
-    function playMusic() {
-      bgMusic.play().then(() => {
-        musicBtn.textContent = "Pause Musik";
-      }).catch(() => {
-        musicBtn.textContent = "Klik Lagi untuk Musik";
-      });
-    }
+    bunga.style.left = Math.random() * 100 + "vw";
+    bunga.style.fontSize = (Math.random() * 20 + 10) + "px";
+    bunga.style.animationDuration = (Math.random() * 5 + 3) + "s";
 
-    function toggleMusic() {
-      if (bgMusic.paused) {
-        playMusic();
-      } else {
-        bgMusic.pause();
-        musicBtn.textContent = "Putar Musik";
-      }
-    }
+    document.body.appendChild(bunga);
 
-    function spawnFloaters() {
-      if (floatingTimer) return;
-      floatingTimer = setInterval(() => {
-        const item = document.createElement("div");
-        item.className = "float";
-        item.textContent = Math.random() > 0.35 ? "🎈" : "❤";
-        item.style.left = Math.random() * 92 + "vw";
-        item.style.animationDuration = (4 + Math.random() * 3).toFixed(2) + "s";
-        item.style.fontSize = (18 + Math.random() * 16).toFixed(0) + "px";
-        document.body.appendChild(item);
-        setTimeout(() => item.remove(), 7200);
-      }, 380);
-    }
+    setTimeout(() => bunga.remove(), 8000);
+}
 
-    function openWhatsAppThanks() {
-      const nomorWA = "6282275234052";
-      const pesan = encodeURIComponent("Hai, aku sudah baca kartu ulang tahunnya. Terima kasih banyak ya, manis banget!");
-      window.open(`https://wa.me/${nomorWA}?text=${pesan}`, "_blank");
-    }
+setInterval(createBunga, 500);
+</script>
 
-    openBtn.addEventListener("click", () => {
-      if (!launched) startCard();
-    });
-
-    replayBtn.addEventListener("click", replayMessage);
-    musicBtn.addEventListener("click", toggleMusic);
-    thanksBtn.addEventListener("click", openWhatsAppThanks);
-  </script>
 </body>
 </html>
